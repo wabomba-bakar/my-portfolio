@@ -1,0 +1,26 @@
+
+
+{{#each messages}}
+<div id="pricing">
+  <div class="container">
+    <div class="row">
+      
+              <div class="text-center">
+          <h2>{{name}}</h2>
+          <h5>{{email}}</h5>
+          <p>{{message}}</p>
+          <p> {{date}}</p>
+        
+      </div>
+    </div>
+    <!-- row end -->
+  </div>
+</div>
+
+<!-- Portoflio end -->
+
+
+
+{{else}}
+<p>No messages in database</p>
+{{/each}}
