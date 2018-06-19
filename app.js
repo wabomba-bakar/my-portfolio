@@ -3,10 +3,6 @@ const express = require('express'),
     // Nexmo = require('nexmo'),
     // socketio = require('socket.io'),
     bodyParser = require('body-parser'),
-    session = require('express-session'),
-    expressValidator = require('express-validator'),
-    path = require('path'),
-    flash = require('connect-flash'),
     exhbs = require('express-handlebars'),
     port = process.env.PORT || 5000,
     app = express();
@@ -52,24 +48,6 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-// Express Session middleware
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
-
-// connect flash midleware
-app.use(flash());
-
-// Set global variables
-app.use((req, res, next) => {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    res.locals.user = req.user || null;
-    next();
-})
 
 // Get Root routes
 app.get('/', (req, res) => {
