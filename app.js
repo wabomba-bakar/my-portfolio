@@ -1,19 +1,10 @@
 const express = require('express'),
     mongoose = require('mongoose'),
-    // Nexmo = require('nexmo'),
-    // socketio = require('socket.io'),
     bodyParser = require('body-parser'),
     exhbs = require('express-handlebars'),
     port = process.env.PORT || 5000,
     app = express();
 
-// Init Nexmo
-// const nexmo = new Nexmo({
-//     apiKey: '',
-//     apiSecret: ''
-// }, {
-//     dedug: true
-// });
 
 //DB Config
 const db = require('./config/database');
@@ -54,8 +45,14 @@ app.get('/', (req, res) => {
     res.render('index');
 })
 
+
+
 // Get Root routes
 app.post('/', (req, res) => {
+    const name = req.body.name,
+        email = req.body.email,
+        message = req.body.message;
+
     let errors = [];
     if (!req.body.name) {
         errors.push({
@@ -75,40 +72,21 @@ app.post('/', (req, res) => {
     if (errors.length > 0) {
         res.render('index', {
             errors: errors,
-            name: req.body.name,
-            email: req.body.email,
-            message: req.body.message
+            name: name,
+            email: email,
+            message: message
         })
     } else {
         const newMessage = {
-            name: req.body.name,
-            email: req.body.email,
-            message: req.body.message
+            name: name,
+            email: email,
+            message: message
         }
+
+
         new Message(newMessage).save()
             .then(message => {
-
-                // nexmo.message.sendSms(
-                //     'your virtual number', name, email, message, {
-                //         type: 'unicode'
-                //     },
-                //     (err, responseData) => {
-                //         if (err) {
-                //             console.log(err);
-                //         } else {
-                //             console.dir(responseData);
-                //             // Get data from the response
-                //             const data = {
-                //                 id: responseData.messages[0]['message-id']
-                //             }
                 res.redirect('/sent');
-                //             //Emit to the client
-                //             io.emit('smsStatus', data);
-                //         }
-                //     }
-                // );
-
-
             })
     }
 });
@@ -132,14 +110,3 @@ app.get('/sent', (req, res) => {
 
 //start server
 app.listen(port, () => console.log(`server started on port: ${port}... `))
-
-
-// Connect to socket.io
-// const io = socketio(server);
-// io.on('connection', (socket) => {
-//     console.log('connected to socket.io')
-// });
-
-// io.on('disconnect', () => {
-//     console.log('Disconnected');
-// });

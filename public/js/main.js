@@ -8,11 +8,6 @@
  const button = document.getElementById('button');
  const response = document.querySelector('.response');
 
- //  const socket = io();
- //  socket.on('smsStatus', (data) => {
- //      response.innerHTML = '<h5>Your message is successfully sent to Bakar.</h5>'
- //  })
-
  function send() {
      const name = nameInput.value,
          email = emailInput.value,
