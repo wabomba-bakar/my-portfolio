@@ -6,6 +6,7 @@ const express = require('express'),
     app = express();
 
 
+
 //DB Config
 const db = require('./config/database');
 
@@ -52,6 +53,9 @@ app.post('/', (req, res) => {
     const name = req.body.name,
         email = req.body.email,
         message = req.body.message;
+
+
+
 
     let errors = [];
     if (!req.body.name) {
